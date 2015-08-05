@@ -7,5 +7,6 @@ namespace DistributedWebTest.Server.WebApi.Controllers
 {
     public class DashboardController
     {
+        
     }
 }
