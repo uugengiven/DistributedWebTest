@@ -134,19 +134,17 @@ new Nightmare({ timeout: 60000 })
   .on('urlChanged', function() {
         page.times.url.push(new Date());
     })
-  .goto('https://qa.admin2.talentportal.ddiworld.com')
-    .type('#UserName', 'automation@test.com')
-    .type('#Password', 'automation1')
+  .goto('https://www.google.com')
     .screenshot('./test.jpg')
-    .click('#logon-button')
-    .wait("Dashboard Home")
+    .type('#lst-ib', 'funny cat pictures')
+    .wait()
     .screenshot('./test1.jpg')
     .run(function (err, nightmare) {
       if (err) {
         return console.log(err);
       } else {
             page.startTime = page.times.start[0];
-            har = createHAR(nightmare.url, nightmare.title, page.startTime, page.resources);
+            har = createHAR("https://www.google.com", "Gloobal", page.startTime, page.resources);
             //console.log(JSON.stringify(har, undefined, 4));
             //console.log("Total page load started = " + page.times.start.length);
             fs.writeFile("./test.har", JSON.stringify(har, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
