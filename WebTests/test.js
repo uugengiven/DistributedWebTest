@@ -96,6 +96,7 @@ function createHAR(address, title, startTime, resources)
 
 
 var Nightmare = require('nightmare');
+var fs = require('fs');
 
 var page = {title: "Test Title", address: "http://www.yahoo.com"};
     page.resources = [];
@@ -104,7 +105,7 @@ var page = {title: "Test Title", address: "http://www.yahoo.com"};
     page.times.end = [];
     page.times.url = [];
     
-new Nightmare()
+new Nightmare({ timeout: 30000 })
   .on('resourceReceived', function (res) {
         if (res.stage === 'start') {
             page.resources[res.id].startReply = res;
@@ -136,15 +137,19 @@ new Nightmare()
   .goto('https://qa.admin2.talentportal.ddiworld.com')
     .type('#UserName', 'automation@test.com')
     .type('#Password', 'automation1')
+    .screenshot('./test.jpg')
     .click('#logon-button')
-    .wait()
+    .wait("Dashboard Home")
+    .screenshot('./test1.jpg')
     .run(function (err, nightmare) {
       if (err) {
         return console.log(err);
       } else {
-            //har = createHAR(nightmare.url, nightmare.title, page.startTime, page.resources);
+            page.startTime = page.times.start[0];
+            har = createHAR(nightmare.url, nightmare.title, page.startTime, page.resources);
             //console.log(JSON.stringify(har, undefined, 4));
-            console.log("Total page load started = " + page.times.start.length);
+            //console.log("Total page load started = " + page.times.start.length);
+            fs.writeFile("./test.har", JSON.stringify(har, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
             for (var j = 0; j < page.times.start.length; j++)
             {
                 console.log("Start: " + page.times.start[j]);
