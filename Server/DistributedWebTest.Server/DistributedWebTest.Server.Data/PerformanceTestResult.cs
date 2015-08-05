@@ -9,8 +9,10 @@ namespace DistributedWebTest.Server.Data
 {
     public class PerformanceTestResult
     {
+        [JsonProperty(PropertyName = "id")]
+        public String Id { get; set; }
         [JsonProperty("nodeId", NullValueHandling = NullValueHandling.Ignore)]
-        public Guid NodeId { get; set; }
+        public String NodeId { get; set; }
         [JsonProperty("nodeName", NullValueHandling = NullValueHandling.Ignore)]
         public String NodeName { get; set; }
         [JsonProperty("testTime", NullValueHandling = NullValueHandling.Ignore)]

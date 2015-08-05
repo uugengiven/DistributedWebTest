@@ -1,4 +1,5 @@
 ﻿using DistributedWebTest.Server.Data;
+using DistributedWebTest.Server.DocumentDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,13 @@ namespace DistributedWebTest.Server.WebApi.Controllers
         // GET api/values
         [HttpPost]
         [Route("savetestresults")]
-        public int SaveTestResult(PerformanceTestResult data)
+        public String SaveTestResult(PerformanceTestResult data)
         {
-            return 1;
+            //
+            var repo =  new DocumentDBRepository<PerformanceTestResult>("DistributedTestResults");
+            data.Id = Guid.NewGuid().ToString();
+            TestResultsRepository.SaveTestResults(data).Wait();
+            return data.Id;
         }
 
     }
