@@ -49,12 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="HarResultMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestResultContext.cs" />
+    <Compile Include="PerformanceTestResultMap.cs" />
+    <Compile Include="TestResultRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DistributedWebTest.Server.Data\DistributedWebTest.Server.Data.csproj">
+      <Project>{a2340a06-03e0-4dd5-9795-91e4f39b8c7a}</Project>
+      <Name>DistributedWebTest.Server.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

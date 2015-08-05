@@ -9,6 +9,11 @@ namespace DistributedWebTest.Server.Data
 {
     public class PerformanceTestResult
     {
+        public PerformanceTestResult()
+        {
+            GeoFrom = new GeoLocation();
+            GeoTo = new GeoLocation();
+        }
         [JsonProperty(PropertyName = "id")]
         public String Id { get; set; }
         [JsonProperty("nodeId", NullValueHandling = NullValueHandling.Ignore)]

@@ -20,9 +20,17 @@ namespace DistributedWebTest.Server.WebApi.Controllers
             //
             var repo =  new DocumentDBRepository<PerformanceTestResult>("DistributedTestResults");
             data.Id = Guid.NewGuid().ToString();
-            TestResultsRepository.SaveTestResults(data).Wait();
+            repo.CreateItemAsync(data).Wait();
+            //TestResultsRepository.SaveTestResults(data).Wait();
             return data.Id;
         }
+
+        [HttpPost]
+        [Route("savehar")]
+        public void SaveHarResult(HarResult data)
+        {
+        }
+
 
     }
 }
