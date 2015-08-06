@@ -74,7 +74,8 @@ queue()
         .defer(d3.json, "./js/vendor/d3/world-110m.json")
 //        .defer(d3.json, "./js/vendor/d3/world-50m.json")
         .defer(d3.json, "./js/pinger_mock_data.json")
-        .await(ready);
+//         .defer(d3.json, "http://distributedwebtest.azurewebsites.net/api/data/getlatesttestresults")
+       .await(ready);
 recalcElementSizes();
 function ready(error, world, places) {
 //    console.log(places);
@@ -98,6 +99,8 @@ function ready(error, world, places) {
     .attr("class","backflyer")
     .attr("d", function(d) { return swoosh(flying_arc(d,false)) })
     .style("stroke", function(d) { return perfColor(d) })
+        .on("click",function(d){clickedNode(d)})
+
     ;
         
 svg.append("path")
@@ -244,6 +247,13 @@ function mouseup() {
 function clickedNode(d){
     //display the node info
     console.log("Clicked node:",d);
+    $("#nodename")
+            .text(d.nodeName)
+            .css({"color":perfColor(d)})
+    ;
+    
+    $("#location").text(d.geoFrom[0].latitude+", "+d.geoFrom[0].longitude);
+    $("#rawdata").text(JSON.stringify(d,null,4));
 }
 function refresh(duration) {
     //recalcCallout();
@@ -342,7 +352,15 @@ function flying_arc(pts,eclipsed) {
       result.push(mid(midptB),projection(target)
                  )
   }
-
+  
+  if((is_eclipsed(source)==eclipsed) && (eclipsed ==is_eclipsed(target)))
+  {
+      result=[
+          projection(source),
+          sky(skypt),
+          projection(target)
+      ]
+  }
    return result;
 }
 function fade_at_edge(d) {
@@ -384,13 +402,13 @@ function perfColor(d) {
     //sends the node object
     var perfRatio=d.totalTime/d.avgTime;
     if (perfRatio>3) {
-        return "#ff0000";
+        return "#df3720";
     } else if (perfRatio >2) {
-        return "#ff8800";
+        return "#f29011";
     } else if (perfRatio>1) {
-        return "#ffff00";
+        return "#e4cf19";
     } else {
-        return "#00ff00";
+        return "#68c231";
     }
 }
 function location_along_arc(start, end, loc) {
@@ -439,6 +457,7 @@ function clip(d) {
 
 function recalcElementSizes() {
     width = $("#boxy").width();
+    $("#boxy").height(width);
     height = $("#boxy").height();
 
     minDim = Math.min(width, height) * .75;
