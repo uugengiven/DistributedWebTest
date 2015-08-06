@@ -42,12 +42,21 @@ namespace DistributedWebTest.Server.EntityFramework
 
         public List<PerformanceTestResult> GetLatestTestResults()
         {
-
+            var dateTime = DateTime.UtcNow - TimeSpan.FromDays(1);
             List<PerformanceTestResult> results = new List<PerformanceTestResult>();
             using (TestResultContext context = new TestResultContext(ConfigurationManager.ConnectionStrings["TestResultDb"].ConnectionString))
             {
-                var x = context.PerformanceTestResults.Where(r => r.TestTime > DateTime.UtcNow - TimeSpan.FromDays(1));
-                results = x.ToList();
+                var last24HoursResults = context.PerformanceTestResults.Where(r => r.TestTime > dateTime);
+
+                var resultsGroupedByNode = last24HoursResults.GroupBy(r => r.NodeId);
+
+                foreach (var resultGroup in resultsGroupedByNode)
+                {
+                    var averageTime = resultGroup.Average(r => r.TotalTime);
+                    var result = resultGroup.OrderByDescending(r => r.TestTime).First();
+                    result.AverageTime = (int)averageTime;
+                    results.Add(result);
+                }
             }
             return results;
         }
