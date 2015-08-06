@@ -49,18 +49,19 @@
   stroke: gray;
   stroke-width: 3;
 }
-.flyers {
+.flyers,.backflyers {
   stroke-width:5;
-  opacity: .6;
-  stroke: darkred; 
+  /*opacity: .6;*/
+  /*stroke: darkred;*/ 
 }
-.arc, .flyer {
+.arc, .flyer, .backflyer {
+    /*stroke: darkred;*/
   stroke-linejoin: round;
   fill:none;
 }
   .arc { }
   .flyer { }
-  .flyer:hover {stroke:darkblue; }
+  .flyer:hover,.backflyer:hover {stroke:darkblue!important; }
 
 </style>
 

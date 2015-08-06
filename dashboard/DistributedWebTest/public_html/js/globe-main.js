@@ -5,35 +5,7 @@ $( window ).resize(function() {
         recalcElementSizes();
         refresh();
     });
-$("#overlaypane")
-    //$("").dialog();
-//    $("#dialog").dialog({
-//        position: {
-//            my: "right top",
-//            at: "right-10 top+20",
-//            of: window
-//        },
-//        drag: function(event, ui) {
-//            //console.log("drag");
-//            refresh();
-//        },
-//        resizeStop: function(event, ui) {
-//            //console.log("dragStop");
-//            refresh();
-//        },
-//        resize: function(event, ui) {
-//            //console.log("dragStop");
-//            refresh();
-//        },
-//        close: function(event, ui) {
-//            //console.log("dragStop");
-//            clickedPoint = null;
-//            refresh();
-//        },
-//        autoOpen: false,
-//        closeOnEscape: true,
-//    });
-
+    
 });
 
 var width = $("#boxy").width(),
@@ -112,21 +84,6 @@ function ready(error, world, places) {
             .attr("id", "sphere")
             .attr("d", path)
             ;
-    svg.selectAll("defs")
-            .append("pattern")
-            .attr("id", "xone_symbol")
-            .attr("patternUnits", "userSpaceOnUse")
-            .attr("x", "0")
-            .attr("y", "0")
-            .attr("width", "186")
-            .attr("height", "186")
-            .append("image")
-            .attr("x", "0")
-            .attr("y", "0")
-            .attr("width", "186")
-            .attr("height", "186")
-            .attr("xlink:href", "./img/ExOne_symbol_debug.png")
-            ;
     svg.append("use")
             .attr("class", "stroke earth")
             .attr("xlink:href", "#sphere");
@@ -135,10 +92,25 @@ function ready(error, world, places) {
             .attr("class", "fill earth")
             .attr("xlink:href", "#sphere");
 
-    svg.append("path")
-            .datum(graticule.outline)
-            .attr("class", "backcircle earth")
-            .attr("d", path);
+  svg.append("g").attr("class","backflyers")
+    .selectAll("path").data(places)
+    .enter().append("path")
+    .attr("class","backflyer")
+    .attr("d", function(d) { return swoosh(flying_arc(d,false)) })
+    .style("stroke", function(d) { return perfColor(d) })
+    ;
+        
+svg.append("path")
+            .datum({type: "Sphere"})
+            .attr("id", "sphere")
+            .attr("d", path)
+            ;
+//    svg.append("path")
+//            .datum(graticule.outline)
+//            .attr("class", "backcircle earth")
+//            .attr("fill","#cccccc")
+//            .attr("opacity","1.0")
+//            .attr("d", path);
 
     svg.selectAll(".graticule")
             .data(graticule.lines)
@@ -163,44 +135,7 @@ function ready(error, world, places) {
             .attr("class", "graticule noclicks earth")
             .attr("d", path);
 
-// 
-//The line SVG Path we draw
-//    var lineGraph = svg.append("path")
-//            .attr("d", lineFunction(lineData))
-//            .attr("class", "callout")
-//            .attr("stroke", "#0b3e6f")
-//            .attr("stroke-width", 4)
-//            .attr("fill", "none");
 
-//    svg.append("g")
-//            .attr("class", "points")
-//            .selectAll("text")
-//            .data(places.features)
-//            .enter()
-//
-//            //for circle-point------------------------------
-//            .append("path")
-//            .style("fill","black")
-//            .attr("opacity",0.5)
-////            .attr("d", path.pointRadius(function(d) {
-////                if (d.properties)
-//////            return 3+(iconSize*d.properties.isExOne);
-////                    return d.properties.isExOne ? "0" : pointSize;
-////            }))
-//            .attr("d", path)
-//            .on("click", pointClick)
-//            ;
-//            
-        
-      // spawn links between cities as source/target coord pairs
-//  places.forEach(function(a) {
-//    
-//        links.push({
-//          source: a.geometry.coordinates,
-//          target: b.geometry.coordinates
-//        })
-//        
-//        });
   // build geoJSON features from links array
 //  console.log(places);
   places.forEach(function(e) {
@@ -239,17 +174,12 @@ function ready(error, world, places) {
     .selectAll("path").data(places)
     .enter().append("path")
     .attr("class","flyer")
-    .attr("d", function(d) { return swoosh(flying_arc(d)) })
+    .attr("d", function(d) { return swoosh(flying_arc(d,true)) })
+    .style("stroke",function(d){return perfColor(d)})
+    .on("click",function(d){clickedNode(d)})
     ;
-
-            
             
     d3.select(self.frameElement).style("height", height + "px");
-    
-    
-    
-    
-
 }
 
 d3.timer(function() {
@@ -311,7 +241,10 @@ function mouseup() {
         m0 = null;
     }
 }
-
+function clickedNode(d){
+    //display the node info
+    console.log("Clicked node:",d);
+}
 function refresh(duration) {
     //recalcCallout();
     svg
@@ -366,16 +299,24 @@ function refresh(duration) {
 //        return fade_at_edge(d)
 //    })
 //;
-  svg.selectAll(".flyer")
-    .attr("d", function(d) { return swoosh(flying_arc(d)) })
-    .attr("opacity", function(d) {
-      return fade_at_edge(d)
-    }) 
+  svg.selectAll(".backflyer")
+    .attr("d", function(d) { return swoosh(flying_arc(d,true)) })
+//    .attr("opacity", function(d) {
+//      return fade_at_edge(d)
+//    }) 
+    .style("stroke",function(d) {return perfColor(d);})
+;  
+    svg.selectAll(".flyer")
+    .attr("d", function(d) { return swoosh(flying_arc(d,false)) })
+//    .attr("opacity", function(d) {
+//      return fade_at_edge(d)
+//    }) 
+    .style("stroke",function(d) {return perfColor(d);})
 ;
 //  refresh();
 }
-function flying_arc(pts) {
-    //console.log(pts);
+function flying_arc(pts,eclipsed) {
+   //console.log(pts);
   var source = 
 //            pts.source,
               [       
@@ -385,19 +326,24 @@ function flying_arc(pts) {
           target=[
               pts.geoTo[0].longitude,
               pts.geoTo[0].latitude
-          ]
+          ];
 
-
+//console.log("src eclipsed",is_eclipsed(source),"trg eclipsed",is_eclipsed(target));
   var midptA = location_along_arc(source, target, .25);
   var midptB = location_along_arc(source, target, .75);
   var skypt = location_along_arc(source, target, .5);
-  var result = [ projection(source),
-//                 mid(midptA),
-                 sky(skypt),
-//                 mid(midptB),
-                 projection(target)
-             ]
-  return result;
+  var result =[];
+  if(is_eclipsed(source)==eclipsed){
+      result.push(projection(source),mid(midptA))
+  }
+  result.push(sky(skypt));
+  
+  if(is_eclipsed(target)==eclipsed){
+      result.push(mid(midptB),projection(target)
+                 )
+  }
+
+   return result;
 }
 function fade_at_edge(d) {
     return d;
@@ -423,7 +369,29 @@ function fade_at_edge(d) {
   return fade(dist)
 }
 function is_eclipsed(d){
-    
+//    pass in a lonlat pair array
+  var centerPos = projection.invert([width/2,height/2]),
+      arc = d3.geo.greatArc()
+      ;
+  // function is called on 2 different data structures..
+ 
+  var start_dist = 1.57 - arc.distance({source: d, target: centerPos});
+  return (start_dist<0);
+   
+}
+function perfColor(d) {
+    //console.log("perfcolor for:",d);
+    //sends the node object
+    var perfRatio=d.totalTime/d.avgTime;
+    if (perfRatio>3) {
+        return "#ff0000";
+    } else if (perfRatio >2) {
+        return "#ff8800";
+    } else if (perfRatio>1) {
+        return "#ffff00";
+    } else {
+        return "#00ff00";
+    }
 }
 function location_along_arc(start, end, loc) {
     //console.log(start, end, loc);
