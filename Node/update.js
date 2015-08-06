@@ -1,7 +1,7 @@
 var https = require('https');
 var fs = require('fs');
 
-module.exports {
+module.exports = {
     updateFile: function (filename, url) {
 
         var file = fs.createWriteStream(filename);
