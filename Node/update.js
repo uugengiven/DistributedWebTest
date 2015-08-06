@@ -7,6 +7,6 @@ module.exports = {
         var file = fs.createWriteStream(filename);
         var request = https.get(url, function(response) {
             response.pipe(file);
-        }
+        });
     }
-}
+};
