@@ -5,18 +5,18 @@
     "testTime": "Fri Oct 10 1980 04:04:51 GMT-0400 (Eastern Daylight Time)",
     "ip": "200.45.95.202",
     "dns": "146.122.106.90",
-    "geoFrom": [
+    "geoFrom": 
       {
         "latitude": -55.929482,
         "longitude": 49.037232
       }
-    ],
-    "geoTo": [
+    ,
+    "geoTo": 
       {
         "latitude": 40.3569,
         "longitude": -80.1086
       }
-    ],
+    ,
     "testId": 8,
     "ping": 873,
     "totalTime": 3607,
@@ -29,18 +29,18 @@
     "testTime": "Sat Sep 24 2011 03:14:57 GMT-0400 (Eastern Daylight Time)",
     "ip": "180.44.102.146",
     "dns": "243.147.124.86",
-    "geoFrom": [
+    "geoFrom": 
       {
         "latitude": -69.580222,
         "longitude": -70.353421
       }
-    ],
-    "geoTo": [
+    ,
+    "geoTo": 
       {
         "latitude": 40.3569,
         "longitude": -80.1086
       }
-    ],
+    ,
     "testId": 3,
     "ping": 1036,
     "totalTime": 2990,
@@ -53,18 +53,18 @@
     "testTime": "Sat Aug 27 2011 05:26:35 GMT-0400 (Eastern Daylight Time)",
     "ip": "143.22.117.246",
     "dns": "105.252.178.110",
-    "geoFrom": [
+    "geoFrom": 
       {
         "latitude": 63.201628,
         "longitude": 112.47143
       }
-    ],
-    "geoTo": [
+    ,
+    "geoTo": 
       {
         "latitude": 40.3569,
         "longitude": -80.1086
       }
-    ],
+    ,
     "testId": 10,
     "ping": 137,
     "totalTime": 4169,
@@ -77,18 +77,18 @@
     "testTime": "Mon Apr 02 1979 11:57:49 GMT-0400 (Eastern Daylight Time)",
     "ip": "250.247.191.218",
     "dns": "86.11.64.70",
-    "geoFrom": [
+    "geoFrom": 
       {
         "latitude": 9.156822,
         "longitude": -166.401857
       }
-    ],
-    "geoTo": [
+    ,
+    "geoTo": 
       {
         "latitude": 40.3569,
         "longitude": -80.1086
       }
-    ],
+    ,
     "testId": 0,
     "ping": 228,
     "totalTime": 3708,
@@ -101,18 +101,18 @@
     "testTime": "Fri Oct 01 1999 22:32:01 GMT-0400 (Eastern Daylight Time)",
     "ip": "119.157.161.110",
     "dns": "175.101.92.212",
-    "geoFrom": [
+    "geoFrom": 
       {
         "latitude": -40.217174,
         "longitude": 73.813799
       }
-    ],
-    "geoTo": [
+    ,
+    "geoTo": 
       {
         "latitude": 40.3569,
         "longitude": -80.1086
       }
-    ],
+    ,
     "testId": 8,
     "ping": 527,
     "totalTime": 3921,

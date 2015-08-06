@@ -73,12 +73,12 @@ var svg = d3.select("#boxy").append("svg")
 queue()
         .defer(d3.json, "./js/vendor/d3/world-110m.json")
 //        .defer(d3.json, "./js/vendor/d3/world-50m.json")
-        .defer(d3.json, "./js/pinger_mock_data.json")
-//         .defer(d3.json, "http://distributedwebtest.azurewebsites.net/api/data/getlatesttestresults")
+//        .defer(d3.json, "./js/pinger_mock_data.json")
+         .defer(d3.json, "http://distributedwebtest.azurewebsites.net/api/data/getlatesttestresults")
        .await(ready);
 recalcElementSizes();
 function ready(error, world, places) {
-//    console.log(places);
+    //console.log(places);
     svg.append("defs")
             .append("path")
             .datum({type: "Sphere"})
@@ -330,12 +330,12 @@ function flying_arc(pts,eclipsed) {
   var source = 
 //            pts.source,
               [       
-              pts.geoFrom[0].longitude,
-              pts.geoFrom[0].latitude
+              pts.geoFrom.longitude,
+              pts.geoFrom.latitude
               ],
           target=[
-              pts.geoTo[0].longitude,
-              pts.geoTo[0].latitude
+              pts.geoTo.longitude,
+              pts.geoTo.latitude
           ];
 
 //console.log("src eclipsed",is_eclipsed(source),"trg eclipsed",is_eclipsed(target));
