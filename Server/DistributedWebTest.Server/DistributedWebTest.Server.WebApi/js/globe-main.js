@@ -252,7 +252,7 @@ function clickedNode(d){
             .css({"color":perfColor(d)})
     ;
     
-    $("#location").text(d.geoFrom[0].latitude+", "+d.geoFrom[0].longitude);
+    $("#location").text(d.geoFrom.latitude+", "+d.geoFrom.longitude);
     $("#rawdata").text(JSON.stringify(d,null,4));
 }
 function refresh(duration) {
