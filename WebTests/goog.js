@@ -16,6 +16,7 @@ if (!Date.prototype.toISOString) {
 var HAR = require('./har');
 var Nightmare = require('nightmare');
 var fs = require('fs');
+var totalSize = 0;
 
 var page = {title: "Test Title", address: "http://www.yahoo.com"};
     page.resources = [];
@@ -28,6 +29,7 @@ new Nightmare({ timeout: 60000 })
   .on('resourceReceived', function (res) {
         if (res.stage === 'start') {
             page.resources[res.id].startReply = res;
+            totalSize += res.bodySize;
         }
         if (res.stage === 'end') {
             page.resources[res.id].endReply = res;
@@ -84,6 +86,7 @@ new Nightmare({ timeout: 60000 })
                 console.log("End: " + page.times.endTime[j]);
                 console.log("Url: " + page.times.url[j]);
                 console.log("Total time to load = " + ((new Date(page.times.endTime[j])) - (new Date(page.times.startTime[j]))));
+                console.log("Body size: " + totalSize);
             }
       }
     });
