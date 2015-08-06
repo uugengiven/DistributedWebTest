@@ -26,5 +26,52 @@ namespace DistributedWebTest.Server.EntityFramework
             }
             return id;
         }
+
+        public void SaveHarFile(HarResult result)
+        {
+            int id;
+            using (TestResultContext context = new TestResultContext(ConfigurationManager.ConnectionStrings["TestResultDb"].ConnectionString))
+            {
+                context.HarResults.Add(result);
+                context.SaveChanges();
+
+            }
+        }
+
+
+
+        public List<PerformanceTestResult> GetLatestTestResults()
+        {
+
+            List<PerformanceTestResult> results = new List<PerformanceTestResult>();
+            using (TestResultContext context = new TestResultContext(ConfigurationManager.ConnectionStrings["TestResultDb"].ConnectionString))
+            {
+                var x = context.PerformanceTestResults.Where(r => r.TestTime > DateTime.UtcNow - TimeSpan.FromDays(1));
+                results = x.ToList();
+            }
+            return results;
+        }
+
+        public HarResult GetHarFile(int id)
+        {
+            HarResult result = new HarResult();
+            using (TestResultContext context = new TestResultContext(ConfigurationManager.ConnectionStrings["TestResultDb"].ConnectionString))
+            {
+                var x = context.HarResults.FirstOrDefault(f => f.Id == id);
+                result = x;
+            }
+            return result;
+        }
+
+        public List<PerformanceTestResult> GetAllTestResults()
+        {
+            List<PerformanceTestResult> results = new List<PerformanceTestResult>();
+            using (TestResultContext context = new TestResultContext(ConfigurationManager.ConnectionStrings["TestResultDb"].ConnectionString))
+            {
+                var x = context.PerformanceTestResults;
+                results = x.ToList();
+            }
+            return results;
+        }
     }
 }

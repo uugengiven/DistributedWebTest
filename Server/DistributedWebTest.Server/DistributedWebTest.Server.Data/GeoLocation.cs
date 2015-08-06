@@ -10,8 +10,8 @@ namespace DistributedWebTest.Server.Data
     public class GeoLocation
     {
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
-        public double Latitude { get; set; }
+        public decimal Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
-        public double Longitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }

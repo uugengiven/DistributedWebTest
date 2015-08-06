@@ -32,8 +32,34 @@ namespace DistributedWebTest.Server.WebApi.Controllers
         [Route("savehar")]
         public void SaveHarResult(HarResult data)
         {
+            TestResultRepository repo = new TestResultRepository();
+            repo.SaveHarFile(data);
         }
 
+        [HttpGet]
+        [Route("gethar")]
+        public string GetHar(int id)
+        {
+            TestResultRepository repo = new TestResultRepository();
+            return repo.GetHarFile(id).File;
+        }
+
+
+        [HttpGet]
+        [Route("getlatesttestresults")]
+        public List<PerformanceTestResult> GetTestResults()
+        {
+            TestResultRepository repo = new TestResultRepository();
+            return repo.GetLatestTestResults();
+        }
+
+        [HttpGet]
+        [Route("getalltestresults")]
+        public List<PerformanceTestResult> GetAllTestResults()
+        {
+            TestResultRepository repo = new TestResultRepository();
+            return repo.GetAllTestResults();
+        }
 
     }
 }
