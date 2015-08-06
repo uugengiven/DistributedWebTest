@@ -15,7 +15,7 @@ namespace DistributedWebTest.Server.Data
             GeoTo = new GeoLocation();
         }
         [JsonProperty(PropertyName = "id")]
-        public String Id { get; set; }
+        public int Id { get; set; }
         [JsonProperty("nodeId", NullValueHandling = NullValueHandling.Ignore)]
         public String NodeId { get; set; }
         [JsonProperty("nodeName", NullValueHandling = NullValueHandling.Ignore)]
