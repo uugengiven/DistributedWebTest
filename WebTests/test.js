@@ -135,9 +135,9 @@ new Nightmare({ timeout: 60000 })
 
             fs.writeFile("./test" + postId + ".har", JSON.stringify(har, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
             var harData = { id: postId,
-                            har: har }
+                            file: har }
             
-            //postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savehar", data, function (res) { console.log(res); } );
+            postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savehar", data, function (res) { console.log(res); } );
             
 
       }
