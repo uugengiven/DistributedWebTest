@@ -37,8 +37,14 @@ module.exports = {
 
         res.on('end', function() {
           console.log(responseString);
-          var responseObject = JSON.parse(responseString);
-          success(responseObject);
+          if(responseString){
+            var responseObject = JSON.parse(responseString);
+            success(responseObject);
+          }
+            else
+          {
+            success();
+          }
         });
       });
 

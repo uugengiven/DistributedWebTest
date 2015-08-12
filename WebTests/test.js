@@ -18,6 +18,8 @@ var Nightmare = require('nightmare');
 var fs = require('fs');
 var ping = require('tcp-ping');
 var postdata = require('./postdata');
+var config = require('./config');
+var har;
 
 var currentPageid = -1;
 var totalSize = 0;
@@ -30,26 +32,20 @@ var page = {title: "Test Title", address: "http://www.yahoo.com"};
     page.times.url = [];
     
     var data = {
-    nodeId: "df75afc9-582d-4fd8-92e8-c6bdc06b502b",
-    nodeName: "Nodesic",
+    nodeId: config.id,
+    nodeName: config.name,
     testTime: new Date(),
-    ip: "198.233.179.5",
-    dns: "66.45.80.48",
-    geoFrom: {
-        latitude: "37.7833",
-        longitude: "-122.4167"
-    },
-    geoTo: {
-        latitude: "40.3569",
-        longitude: "-80.1086"
-    },
+    ip: config.ip,
+    dns: config.dns,
+    geoFrom: config.geoFrom,
+    geoTo: config.geoTo,
     testId: 1,
     ping: 0,
     totalTime: 0,
     totalSize: 0
     }            
 
-    var pingOptions = { address: "66.45.80.48",
+    var pingOptions = { address: data.ip,
                         port: 80,
                         attempts: 2
                       }
@@ -125,19 +121,30 @@ new Nightmare({ timeout: 60000 })
             
             data.totalTime = totTime;
             data.totalSize = totalSize;
+            page.startTime = page.times.startTime[0];
+            har = HAR.createHAR(pages, "https://www.google.com", "Gloobal", page.startTime, page.resources);   
+            
             
             console.log(JSON.stringify(data, undefined, 4));
-            postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savetestresults", data, function (res) { postId = res; } );
+            postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savetestresults", data, function (res) { 
+                postId = res; 
+                fs.writeFile("./test" + postId + ".har", JSON.stringify(har, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
+                console.log(res);
+                console.log(postId);
+                var harData = new Object();
+                harData.id = postId;
+                harData.file = JSON.stringify(har);
+                
+                //fs.writeFile("./test" + postId + ".har", JSON.stringify(harData, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
+
+//                console.log(JSON.stringify(harData, undefined, 4));
+                postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savehar", harData, function (res) { console.log(res); } );               
+            });
 
             
-            page.startTime = page.times.startTime[0];
-            har = HAR.createHAR(pages, "https://www.google.com", "Gloobal", page.startTime, page.resources);
 
-            fs.writeFile("./test" + postId + ".har", JSON.stringify(har, undefined, 4), function(err) { if (err) { return console.log("File write error") } });
-            var harData = { id: postId,
-                            file: har }
-            
-            postdata.post("distributedwebtest.azurewebsites.net", "/api/data/savehar", data, function (res) { console.log(res); } );
+
+
             
 
       }
