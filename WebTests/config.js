@@ -1,4 +1,4 @@
-var config = {};
+var config = module.exports = {};
 
 config.id = "df75afc9-582d-4fd8-92e8-c6bdc06b502b";
 config.name = "Nodesic";
@@ -13,4 +13,3 @@ config.geoTo = {
         latitude: "40.3569",
         longitude: "-80.1086"
     };
-    

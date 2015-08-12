@@ -1,2 +1,2 @@
-var HAR = require('./har');
-console.log(typeof HAR.createHAR);
+var config = require('./config');
+console.log(JSON.stringify(config, undefined, 4));
