@@ -89,6 +89,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -200,6 +201,9 @@
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
+    <Compile Include="GetHarFile.ashx.cs">
+      <DependentUpon>GetHarFile.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -362,6 +366,7 @@
     <Content Include="js\vendor\d3\world-50m.json" />
     <Content Include="js\vendor\d3\world-countries.json" />
     <Content Include="css\swoosh_work.ai" />
+    <Content Include="GetHarFile.ashx" />
     <None Include="Properties\PublishProfiles\DistributedWebTest %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\DistributedWebTest.pubxml" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
