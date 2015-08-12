@@ -56,7 +56,7 @@ module.exports = {
                     bodySize: startReply.bodySize,
                     content: {
                         size: startReply.bodySize,
-                        mimeType: endReply.contentType
+                        mimeType: endReply.contentType ?  endReply.contentType : "text/plain"
                     }
                 },
                 cache: {},
@@ -84,7 +84,6 @@ module.exports = {
                 entries: entries
             }
         };
-
     }
 };
 

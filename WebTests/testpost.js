@@ -1,7 +1,7 @@
 var postdata = require('./postdata');
 
 var data = {
-    nodeId: "aaa123",
+    nodeId: "df75afc9-582d-4fd8-92e8-c6bdc06b502b",
     nodeName: "Nodesic",
     testTime: new Date(),
     ip: "198.233.179.5",
