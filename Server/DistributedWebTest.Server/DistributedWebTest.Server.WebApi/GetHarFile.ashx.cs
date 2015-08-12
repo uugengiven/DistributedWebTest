@@ -16,8 +16,9 @@ namespace DistributedWebTest.Server.WebApi
         {
             var id = Convert.ToInt32(context.Request.QueryString["id"]);
             TestResultRepository repo = new TestResultRepository();
-            var file = repo.GetHarFile(id).File;
+            var file = String.Format("onInputData({0}) ", repo.GetHarFile(id).File);
             context.Response.ContentType = "text/plain";
+            context.Response.AddHeader("Content-Disposition", "attachment;filename=file.har");
             context.Response.Write(file);
         }
 
