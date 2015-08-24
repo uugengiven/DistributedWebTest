@@ -27,9 +27,9 @@ module.exports = {
 
             // Exclude Data URI from HAR file because
             // they aren't included in specification
-            if (request.url.match(/(^data:image\/.*)/i)) {
-                return;
-            }
+            //if (request.url.match(/(^data:image\/.*)/i)) {
+            //    return;
+            //}
 
             //console.log(JSON.stringify(resource, undefined, 4));
             entries.push({
